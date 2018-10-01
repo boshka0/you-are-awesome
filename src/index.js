@@ -14,22 +14,29 @@ const createProtoMagicObject = () => {
     return obj;
 };
 
-function sum(){
-	var sum = 0;
+const incrementor = () => {
+	if(!incrementor.sum) incrementor.sum = 0;
     function f() {
-        sum++;
+        incrementor.sum++;
         return f;
     }
       
     f.valueOf = function() {
-        return sum;
+        incrementor.sum++;
+        return incrementor.sum;
     };
       
     return f;
 }
-const incrementor = sum();
 
-const asyncIncrementor = () => {};
+const asyncIncrementor = async () => {
+	if(!asyncIncrementor.sum) asyncIncrementor.sum = 0;
+    return new Promise((resolve, reject)=>{
+        resolve(++asyncIncrementor.sum);
+        reject(new Error(":("));
+    });
+}
+
 const createIncrementer = () => {};
 
 // return same argument not earlier than in one second, and not later, than in two
