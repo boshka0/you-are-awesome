@@ -37,7 +37,12 @@ const asyncIncrementor = async () => {
     });
 }
 
-const createIncrementer = () => {};
+const createIncrementer = function * () {
+	let value = 0;
+	for(;;){
+		yield ++value;
+	}
+}
 
 // return same argument not earlier than in one second, and not later, than in two
 const returnBackInSecond = () => {};
