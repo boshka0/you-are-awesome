@@ -53,10 +53,25 @@ const returnBackInSecond = (param) => {
     });
 }
 
-const getDeepPropertiesCount = () => {};
-const createSerializedObject = () => {};
-const toBuffer = () => {};
-const sortByProto = () => {};
+const getDeepPropertiesCount = (obj) => {
+    let count = Object.keys(obj).length;
+    let array = Object.keys(obj);
+    array.forEach(function(elem){
+        const arrLength = Object.keys(obj[elem]).length;
+        if(arrLength > 0){
+            count += getDeepPropertiesCount(obj[elem]);
+        }
+    })
+    return count;
+};
+
+const createSerializedObject = () => {
+    return new String(JSON.stringify({name: "Nastya"}))
+};
+
+const sortByProto = () => {
+    
+};
 
 exports.createEnumerableProperty = createEnumerableProperty;
 exports.createNotEnumerableProperty = createNotEnumerableProperty;
