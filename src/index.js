@@ -69,9 +69,23 @@ const createSerializedObject = () => {
     return new String(JSON.stringify({name: "Nastya"}))
 };
 
-const sortByProto = () => {
-    
-};
+const sortByProto = (arr) => {
+    const orderSym = Symbol("order");
+	const arrWithOrder = arr.map(item => Object.assign(item, {[orderSym] : countProtosBeforeObjectPrototype(item)}));
+    const sortedArr = arrWithOrder.sort((a, b) => {
+  	    return b[orderSym] - a[orderSym];
+    });
+    function countProtosBeforeObjectPrototype(obj) {
+        let count = 0;
+        let current = obj;
+        while (current.__proto__ !== Object.prototype) {
+            count++;
+            current = current.__proto__; 
+        }
+        return count;
+    }
+    return sortedArr;
+}
 
 exports.createEnumerableProperty = createEnumerableProperty;
 exports.createNotEnumerableProperty = createNotEnumerableProperty;
